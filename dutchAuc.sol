@@ -41,12 +41,6 @@ contract DutchAuction {
         require(_startingPrice >= _minPrice, "starting price < min");
     }
 
-    //Test function need to remove
-    function getDropTime() public view returns (uint) {
-        uint timeElapsed = block.timestamp - startAt;
-        return timeElapsed / duration-1;
-    }
-
     //View function to check the current price without gas fee
     function getPrice() public view returns (uint) {
         uint timeElapsed = block.timestamp - startAt;
