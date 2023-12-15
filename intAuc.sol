@@ -3,8 +3,8 @@ pragma solidity ^0.8.4;
 import "dutchAuc.sol";
 
 contract intAuc {
-    //Test Network: Remix VM (Shanghai) 
-    //Contract Address: 0xd9145CCE52D386f254917e481eB44e9943F39138
+    //Test Network: Injected - MetaMask 
+    //Contract Address: 0xAb2B040ab0C81E941370d5684a72528dC2B352E9
     //DutchAuction address
     DutchAuction public da;
     address payable public owner;
