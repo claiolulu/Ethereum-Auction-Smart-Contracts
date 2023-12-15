@@ -6,7 +6,7 @@ pragma solidity ^0.8.4;
 //Bidders will not receive any profits or gains in the end
 contract DutchAuction {
 
-    address payable public immutable beneficiary; //contract owner address
+    address payable public immutable beneficiary; //Address designated to receive funds resulting from the auction.
     uint public immutable startingPrice; //start price of contract
     uint public immutable minPrice;  //minimum price of contract
     uint public immutable startAt;   //timestamp of contract start
@@ -16,10 +16,12 @@ contract DutchAuction {
     
     bool ended;
 
-    //Test Network: Injected Provider - MetaMask
-    //Contract Address: 0x15E55658E8d5Ef4Cc3e7d874bb81dF41429f56Fa
+    //Test Network: 1. Injected Provider - MetaMask
+    //              2. Remix VM (Shanghai) (Used in the circumstance when
+    //                                      the gas fee is high due the busy traffic)
+    //Contract Address: 1. 0x15E55658E8d5Ef4Cc3e7d874bb81dF41429f56Fa
+    //                  2. 0x5A86858aA3b595FD6663c2296741eF4cd8BC4d01
     //Test construcator value
-    //0x2C89DF082212717B6D5B8BedDEeeBE3fA03D215F
     //startingPrice:
     //100000000000000000
     //discountRate:
@@ -39,6 +41,7 @@ contract DutchAuction {
         endAt = startAt + ((startingPrice - minPrice) / discountRate + 1) * duration;
         //Validate the start price and minimum price
         require(_startingPrice >= _minPrice, "starting price < min");
+        
     }
 
     //View function to check the current price without gas fee
@@ -58,13 +61,21 @@ contract DutchAuction {
         return price;
     }
 
+    //View function to check the current status of contract
+    function getContractStatus() public view returns (string memory) {
+        if(ended || block.timestamp > endAt){
+            return "the contract is ended";
+        } else {
+            return "the contract is open";
+        }
+
+    }
+
+    //Function to allow users to place bids on the auction
     function buy() external payable{
         //Validate the contract state before taking any further action
-        if(ended)
+        if(ended || block.timestamp > endAt)
             revert("bid ended");
-
-        //Validate the contract state by comparing the current timestamp and endtime
-        require(block.timestamp <= endAt, "bid ended");
         
         uint price = getPrice();
 
@@ -72,6 +83,7 @@ contract DutchAuction {
 
         ended = true;
 
+        // Transfer the Ether sent by the bidder to the beneficiary (contract owner)
         beneficiary.transfer(msg.value);
 
     }
