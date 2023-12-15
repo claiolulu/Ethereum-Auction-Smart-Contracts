@@ -45,7 +45,7 @@ contract DutchAuction {
     function getPrice() public view returns (uint) {
         uint timeElapsed = block.timestamp - startAt;
         //Maintain the price for a specific duration, then gradually reduce it in incremental steps
-        uint discount = discountRate * (timeElapsed / duration -1 );
+        uint discount = discountRate * (timeElapsed / duration);
         //Stop the price drop and set it to minimun price when it reaches the minimum price
         uint price;
         if(discount > startingPrice - minPrice){
