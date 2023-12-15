@@ -3,6 +3,7 @@ pragma solidity ^0.8.4;
 import "dutchAuc.sol";
 
 contract intAuc {
+    //Put this file in the folder with dutchAuc.sol
     //Test Network: Injected - MetaMask 
     //Contract Address: 0xAb2B040ab0C81E941370d5684a72528dC2B352E9
     //DutchAuction address
