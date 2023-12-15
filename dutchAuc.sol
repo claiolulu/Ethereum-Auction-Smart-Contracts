@@ -16,8 +16,8 @@ contract DutchAuction {
     uint private transPrice; //contract transaction price
     
     bool ended;
-    //Test Network: Remix VM (Shanghai) 
-    //Test construcator value
+    //Test Network: Injected - MetaMask 
+    //Contract Address: 0xBE4b3536279f5a7CC121630F3b6a330Ae0698776
     //startingPrice:
     //100000000000000000
     //discountRate:
